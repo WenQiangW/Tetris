@@ -1,81 +1,83 @@
 #include"Head.h"
 
 
-//»­³öÓÎÏ·½çÃæ
+
+
+//ç”»å‡ºæ¸¸æˆç•Œé¢
 void DrawGameWindow()
 {
-	//ÏÈ»­³öÎ§Ç½
+	//å…ˆç”»å‡ºå›´å¢™
 	setcolor(RED); 
 	setlinestyle(PS_SOLID,NULL,0);
 	setfillcolor(BLUE);
-	//»­³öÉÏÏÂÎ§Ç½
+	//ç”»å‡ºä¸Šä¸‹å›´å¢™
 	for (int x = WALL_SQUARE_WIDTH; x <= GAME_WALL_WIDTH; x += WALL_SQUARE_WIDTH)
 	{
-		fillrectangle(x - WALL_SQUARE_WIDTH, 0, x, WALL_SQUARE_WIDTH); //ÉÏ
-		fillrectangle(x - WALL_SQUARE_WIDTH, GAME_WALL_HTGH - WALL_SQUARE_WIDTH, x, GAME_WALL_HTGH);//ÏÂ
+		fillrectangle(x - WALL_SQUARE_WIDTH, 0, x, WALL_SQUARE_WIDTH); //ä¸Š
+		fillrectangle(x - WALL_SQUARE_WIDTH, GAME_WALL_HTGH - WALL_SQUARE_WIDTH, x, GAME_WALL_HTGH);//ä¸‹
 	}
-	//»­³ö×óÓÒÎ§Ç½
+	//ç”»å‡ºå·¦å³å›´å¢™
 	for (int y = WALL_SQUARE_WIDTH; y <= GAME_WALL_HTGH; y += WALL_SQUARE_WIDTH)
 	{
-		fillrectangle(0, y, WALL_SQUARE_WIDTH, y + WALL_SQUARE_WIDTH);//×ó
-		fillrectangle(GAME_WALL_WIDTH - WALL_SQUARE_WIDTH, y, GAME_WALL_WIDTH, y + WALL_SQUARE_WIDTH);//ÓÒ
+		fillrectangle(0, y, WALL_SQUARE_WIDTH, y + WALL_SQUARE_WIDTH);//å·¦
+		fillrectangle(GAME_WALL_WIDTH - WALL_SQUARE_WIDTH, y, GAME_WALL_WIDTH, y + WALL_SQUARE_WIDTH);//å³
 	}
 
-	//»­³öÓÒ±ßÍ³¼Æ·ÖÊı¼°Ïà¹Ø¶«Î÷
+	//ç”»å‡ºå³è¾¹ç»Ÿè®¡åˆ†æ•°åŠç›¸å…³ä¸œè¥¿
 
-	//»­³ö·Ö¸îÏß
+	//ç”»å‡ºåˆ†å‰²çº¿
 	setcolor(WHITE);
 	setlinestyle(PS_DASH,2);
 	line(GAME_WALL_WIDTH + 20, 0, GAME_WALL_WIDTH + 20, GAME_WALL_HTGH);
 
-	//ÉèÖÃ×ÖÌå
+	//è®¾ç½®å­—ä½“
 	LOGFONT font;
 	gettextstyle(&font);
-	settextstyle(18, 0, _T("ËÎÌå"));
-	font.lfQuality = ANTIALIASED_QUALITY;//ÉèÖÃÊä³öĞ§¹ûÎª¿¹¾â³İ 
-	//1ÏÔÊ¾Ô¤ÀÀĞÎ×´
-	outtextxy(GAME_WALL_WIDTH + 80, 30, _T("Ô¤ÀÀ"));
+	settextstyle(18, 0, _T("å®‹ä½“"));
+	font.lfQuality = ANTIALIASED_QUALITY;//è®¾ç½®è¾“å‡ºæ•ˆæœä¸ºæŠ—é”¯é½¿ 
+	//1æ˜¾ç¤ºé¢„è§ˆå½¢çŠ¶
+	outtextxy(GAME_WALL_WIDTH + 80, 30, _T("é¢„è§ˆ"));
 
-	outtextxy(GAME_WALL_WIDTH + 80, 170, _T("·ÖÊı"));
+	outtextxy(GAME_WALL_WIDTH + 80, 170, _T("åˆ†æ•°"));
 	
-	outtextxy(GAME_WALL_WIDTH + 65, 250, _T("²Ù×÷ËµÃ÷"));
-	outtextxy(GAME_WALL_WIDTH + 40, 290, _T("w a s d¿ØÖÆ·½Ïò"));
-	outtextxy(GAME_WALL_WIDTH + 40, 335, _T("¿Õ¸ñ ÔİÍ£"));
+	outtextxy(GAME_WALL_WIDTH + 65, 250, _T("æ“ä½œè¯´æ˜"));
+	outtextxy(GAME_WALL_WIDTH + 40, 290, _T("w a s dæ§åˆ¶æ–¹å‘"));
+	outtextxy(GAME_WALL_WIDTH + 40, 335, _T("ç©ºæ ¼ æš‚åœ"));
 	
-	//ÏÔÊ¾·ÖÊı
+	//æ˜¾ç¤ºåˆ†æ•°
 	setcolor(RED);
 	outtextxy(GAME_WALL_WIDTH + 90, 200, '0');
 }
 
-//ÔÚÓÎÏ·ÇøÏÔÊ¾±àºÅÎªrockIdxµÄ·½¿é
+//åœ¨æ¸¸æˆåŒºæ˜¾ç¤ºç¼–å·ä¸ºrockIdxçš„æ–¹å—
 void DisplayRock(int rockIdx,  RockLocation_t*  LocatePtr, bool displayed)
 {
-	int color;//·½¿éµÄÑÕÉ«
+	int color;//æ–¹å—çš„é¢œè‰²
 	int boardFalg = 0;
 	int xRock = 0;
 	int yRock = 0;
 	unsigned short rockCode = RockArray[rockIdx].rockShapeBits;
-	//Èç¹ûdisplayedÎªtrueµÄ»°£¬½«·½¿é¿éÑÕÉ«ÉèÖÃÎªwhite£¬game_board¶ÔÓ¦µÄÎ»ÖÃÉèÖÃÎª1£»
-	//Èç¹ûdisplayedÎªfalseµÄ»°£¬½«·½¿é¿éÑÕÉ«ÉèÖÃÎªblack£¬game_board¶ÔÓ¦µÄÎ»ÖÃÉèÖÃÎª0£»
+	//å¦‚æœdisplayedä¸ºtrueçš„è¯ï¼Œå°†æ–¹å—å—é¢œè‰²è®¾ç½®ä¸ºwhiteï¼Œgame_boardå¯¹åº”çš„ä½ç½®è®¾ç½®ä¸º1ï¼›
+	//å¦‚æœdisplayedä¸ºfalseçš„è¯ï¼Œå°†æ–¹å—å—é¢œè‰²è®¾ç½®ä¸ºblackï¼Œgame_boardå¯¹åº”çš„ä½ç½®è®¾ç½®ä¸º0ï¼›
 	displayed ? (color = WHITE, boardFalg = 1) : (color = BLACK, boardFalg = 0);
 	
 	setcolor(color);
-	setlinestyle(PS_SOLID);//ÉèÖÃÎªÊµÏß£¬
+	setlinestyle(PS_SOLID);//è®¾ç½®ä¸ºå®çº¿ï¼Œ
 	xRock = LocatePtr->left;
 	yRock = LocatePtr->top;
 
-	int count = 0;//Ã¿4¸ö»»ĞĞ£¬¼ÇÂ¼×ø±êÆ«ÒÆÁ¿
+	int count = 0;//æ¯4ä¸ªæ¢è¡Œï¼Œè®°å½•åæ ‡åç§»é‡
 	unsigned short mask = 1;
 	for (int i = 1; i <= 16; ++i)
 	{
 		
 		mask = 1 << (16 - i);
-		if ((rockCode & mask) != 0) //Èç¹û²»Îª0µÄ»°£¬¾Í»­³öĞ¡·½¿é
+		if ((rockCode & mask) != 0) //å¦‚æœä¸ä¸º0çš„è¯ï¼Œå°±ç”»å‡ºå°æ–¹å—
 		{
-			//ÊµÏßµÄÏñËØÎª2
+			//å®çº¿çš„åƒç´ ä¸º2
 			rectangle(xRock , yRock, xRock + ROCK_SQUARE_WIDTH, yRock + ROCK_SQUARE_WIDTH);
 		}
-		if (i % 4 == 0) //»»ĞĞ
+		if (i % 4 == 0) //æ¢è¡Œ
 		{
 			yRock = yRock + ROCK_SQUARE_WIDTH;	
 			xRock = xRock = LocatePtr->left;
