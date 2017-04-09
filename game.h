@@ -1,5 +1,6 @@
 #include"Head.h"
 #define _CRT_SECURE_NO_WARNINGS 1
+
 bool MoveAble(int rockIndex, RockLocation_t* currentLocatePtr, int f_direction);
 void SetGameBoardFlag(int rockIdx, RockLocation_t* curRockLocation);
 void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocation);
@@ -11,9 +12,9 @@ bool IsGameOver();
 
 void PlayGame()
 {
-	char userHit = 0;//ÓÃ»§ÇÃ»÷¼üÅÌ
-	int curRockIndex = 0;//µ±Ç°·½¿éµÄrockArrayÏÂ±ê
-	int nextRockIndex = 0;//ÏÂ´Î
+	char userHit = 0;//ç”¨æˆ·æ•²å‡»é”®ç›˜
+	int curRockIndex = 0;//å½“å‰æ–¹å—çš„rockArrayä¸‹æ ‡
+	int nextRockIndex = 0;//ä¸‹æ¬¡
 	RockLocation_t curRockLocation;
 	curRockLocation.left = initRockLocation.left;
 	curRockLocation.top = initRockLocation.top;
@@ -21,54 +22,54 @@ void PlayGame()
 	srand((unsigned int)time(NULL));
 	curRockIndex = rand() % rockTypeNum;
 	nextRockIndex = rand() % rockTypeNum;
-	//»­³öÔ¤ÀÀÇø³õÊ¼»¯·½¿é
-	//ÔÚ³õÊ¼Î»ÖÃºÍÔ¤ÀÀÇøÏÔÊ¾·½¿éĞÎ×´
+	//ç”»å‡ºé¢„è§ˆåŒºåˆå§‹åŒ–æ–¹å—
+	//åœ¨åˆå§‹ä½ç½®å’Œé¢„è§ˆåŒºæ˜¾ç¤ºæ–¹å—å½¢çŠ¶
 	DisplayRock(curRockIndex, &initRockLocation, 1);
 	DisplayRock(nextRockIndex, &preRockLocation, 1);
 	bool moveAbled = false;
 	while (true)
 	{
-		//ÅĞ¶Ïµ±Ç°·½¿éÊÇ·ñÂäµØ(ÅĞ¶ÏÄÜ·ñÔÙÏÂÒÆ)£ºÈç¹ûÂäµØ,ÅĞ¶ÏÊÇ·ñÂúĞĞ,ÔÙÅĞ¶ÏÊÇ·ñ½áÊøÓÎÏ·£¬ ¸Ä±ägame_board ,»­³öÏÂ´Î³õÊ¼»¯µÄ·½¿é£¬ÒÔ¼°Éú³ÉĞÂµÄÔ¤ÀÀ·½¿é
+		//åˆ¤æ–­å½“å‰æ–¹å—æ˜¯å¦è½åœ°(åˆ¤æ–­èƒ½å¦å†ä¸‹ç§»)ï¼šå¦‚æœè½åœ°,åˆ¤æ–­æ˜¯å¦æ»¡è¡Œ,å†åˆ¤æ–­æ˜¯å¦ç»“æŸæ¸¸æˆï¼Œ æ”¹å˜game_board ,ç”»å‡ºä¸‹æ¬¡åˆå§‹åŒ–çš„æ–¹å—ï¼Œä»¥åŠç”Ÿæˆæ–°çš„é¢„è§ˆæ–¹å—
 		//
 		moveAbled = MoveAble(curRockIndex, &curRockLocation, DIRECT_DOWN);
-		if (!moveAbled) //ÅĞ¶ÏÊÇ·ñÂäµØ£¬²»ÄÜÏÂÒÆ±íÊ¾ÂäµØ
+		if (!moveAbled) //åˆ¤æ–­æ˜¯å¦è½åœ°ï¼Œä¸èƒ½ä¸‹ç§»è¡¨ç¤ºè½åœ°
 		{
-			//ĞŞ¸Ägame_boardµÄÖµ
+			//ä¿®æ”¹game_boardçš„å€¼
 			SetGameBoardFlag(curRockIndex, &curRockLocation);
 			FullLine(); 
 			if (IsGameOver())
 			{
-				MessageBox(NULL, _T("ÓÎÏ·½áÊø"), _T("GAME OVER"), MB_OK);
+				MessageBox(NULL, _T("æ¸¸æˆç»“æŸ"), _T("GAME OVER"), MB_OK);
 				exit(0);
 			}		
-			//ÎªÏÂ´ÎÉú³ÉÄ£¿é¿ªÊ¼×¼±¸
-			DisplayRock(nextRockIndex, &preRockLocation, false);//²Á³ı¾ÉµÄ·½¿é
+			//ä¸ºä¸‹æ¬¡ç”Ÿæˆæ¨¡å—å¼€å§‹å‡†å¤‡
+			DisplayRock(nextRockIndex, &preRockLocation, false);//æ“¦é™¤æ—§çš„æ–¹å—
 			curRockIndex = nextRockIndex;
-			nextRockIndex = rand() % rockTypeNum; //Éú³ÉĞÂµÄÔ¤ÀÀ·½¿é
+			nextRockIndex = rand() % rockTypeNum; //ç”Ÿæˆæ–°çš„é¢„è§ˆæ–¹å—
 			DisplayRock(curRockIndex, &initRockLocation, 1);
 			DisplayRock(nextRockIndex, &preRockLocation, 1);
 			FlushBatchDraw();
-			//ĞŞ¸ÄcurRockLocationµÄÖµ
+			//ä¿®æ”¹curRockLocationçš„å€¼
 			curRockLocation.left = initRockLocation.left;
 			curRockLocation.top = initRockLocation.top; 
 		}
 
-		if (kbhit()) //Èç¹ûÇÃ»÷¼üÅÌÁË ¾Í´¦Àí°´¼ü
+		if (kbhit()) //å¦‚æœæ•²å‡»é”®ç›˜äº† å°±å¤„ç†æŒ‰é”®
 		{
 			userHit = getch();
 			UserHitKeyBoard(userHit, &curRockIndex, &curRockLocation);
 		}
 
-	    //Ã»ÓĞ ¾Í×Ô¶¯ÏÂÒÆÒ»¸öµ¥Î» :²»ÄÜÓÃelse£¬ÒòÎª¿ÉÄÜ°´¼ü²»ÊÇÉÏÏÂ×óÓÒ
+	    //æ²¡æœ‰ å°±è‡ªåŠ¨ä¸‹ç§»ä¸€ä¸ªå•ä½ :ä¸èƒ½ç”¨elseï¼Œå› ä¸ºå¯èƒ½æŒ‰é”®ä¸æ˜¯ä¸Šä¸‹å·¦å³
 		DWORD newtime = GetTickCount();
 		if (newtime - oldtime >= (unsigned int)(300) && moveAbled == TRUE)
 		{
 			oldtime = newtime;
 			DisplayRock(curRockIndex, &curRockLocation, false);
-			curRockLocation.top += ROCK_SQUARE_WIDTH; //ÏÂÂäÒ»¸ñ  
+			curRockLocation.top += ROCK_SQUARE_WIDTH; //ä¸‹è½ä¸€æ ¼  
 		}
 		//AutomaticDownMove(curRockIndex, &curRockLocation);
-		//»­³öĞÂ·½¿é
+		//ç”»å‡ºæ–°æ–¹å—
 		DisplayRock(curRockIndex, &curRockLocation, 1);
 		FlushBatchDraw();
 		Sleep(20);
@@ -82,7 +83,7 @@ void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocati
 	switch (userHit)
 	{
 	case 'W':
-	case 'w'://¡ü
+	case 'w'://â†‘
 		if (MoveAble(RockArray[*RockIndex].nextRockIndex, curRockLocation, DIRECT_UP))
 		{
 			DisplayRock(*RockIndex, curRockLocation, false);
@@ -90,7 +91,7 @@ void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocati
 		}
 		break;
 	case 'S':
-	case 's'://¡ı
+	case 's'://â†“
 		if (MoveAble(*RockIndex, curRockLocation, DIRECT_DOWN))
 		{
 			DisplayRock(*RockIndex, curRockLocation, false);
@@ -102,7 +103,7 @@ void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocati
 		}
 		break;
 	case 'A':
-	case 'a': //¡û
+	case 'a': //â†
 		if (MoveAble(*RockIndex, curRockLocation, DIRECT_LEFT))
 		{
 			DisplayRock(*RockIndex, curRockLocation, false);
@@ -110,14 +111,14 @@ void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocati
 		}
 		break;
 	case 'D':
-	case 'd': //¡ú
+	case 'd': //â†’
 		if (MoveAble(*RockIndex, curRockLocation, DIRECT_RIGHT))
 		{
 			DisplayRock(*RockIndex, curRockLocation, FALSE);
 			curRockLocation->left += ROCK_SQUARE_WIDTH;
 		}
 		break;
-	case ' ': //ÔİÍ£
+	case ' ': //æš‚åœ
 		while (1)
 		{
 			userHit = getch();
@@ -130,13 +131,13 @@ void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocati
 	}
 }
 
-//ÅĞ¶ÏÊÇ·ñÂúĞĞ£¬ÂúĞĞÏû³ı£¬È»ºó¼ÆËãµÃ·Ö
+//åˆ¤æ–­æ˜¯å¦æ»¡è¡Œï¼Œæ»¡è¡Œæ¶ˆé™¤ï¼Œç„¶åè®¡ç®—å¾—åˆ†
 void FullLine()
 {
 	bool linefull = true;
-	int idx = yROCK_SQUARE_NUM;//´Ó×îºóÒ»ĞĞÍùÉÏ²éÕÒ
+	int idx = yROCK_SQUARE_NUM;//ä»æœ€åä¸€è¡Œå¾€ä¸ŠæŸ¥æ‰¾
 	int count = 0;
-	while (count != xROCK_SQUARE_NUM ) //Óöµ½¿ÕĞĞ
+	while (count != xROCK_SQUARE_NUM ) //é‡åˆ°ç©ºè¡Œ
 	{
 		linefull = true;
 		count = 0;
@@ -148,12 +149,12 @@ void FullLine()
 				count++;
 			}
 		}
-		if (linefull) //ÂúĞĞ£¬Ïû³ıµ±Ç°ĞĞ£¬¸üĞÂ·ÖÊı
+		if (linefull) //æ»¡è¡Œï¼Œæ¶ˆé™¤å½“å‰è¡Œï¼Œæ›´æ–°åˆ†æ•°
 		{
 			DelCurLine(idx);
 			game_socres += 3;
 			UpdateSocres(game_socres);
-			idx++;//ÒòÎªÏÂÃæÒª¼õ1
+			idx++;//å› ä¸ºä¸‹é¢è¦å‡1
 		}
 		idx--;
 	}
@@ -165,33 +166,33 @@ void UpdateSocres(int scores)
 	_stprintf(s, _T("%d"), scores);
 	outtextxy(GAME_WALL_WIDTH + 90, 200, s);
 }
-//Ïû³ıµ±Ç°ĞĞ
+//æ¶ˆé™¤å½“å‰è¡Œ
 void DelCurLine(int rowIdx)
 {
-	//²Á³ıµ±Ç°ĞĞ
+	//æ“¦é™¤å½“å‰è¡Œ
 	setcolor(BLACK);
 	for (int i = 1; i < xROCK_SQUARE_NUM; ++i)
 	{
 		rectangle(WALL_SQUARE_WIDTH + (i - 1)*ROCK_SQUARE_WIDTH, (rowIdx - 1)*ROCK_SQUARE_WIDTH + WALL_SQUARE_WIDTH,
 				  WALL_SQUARE_WIDTH + i*ROCK_SQUARE_WIDTH, rowIdx*ROCK_SQUARE_WIDTH + WALL_SQUARE_WIDTH);
 	}
-	//°ÑÉÏÃæµÄÏòÏÂÒÆ
+	//æŠŠä¸Šé¢çš„å‘ä¸‹ç§»
 	int cnt = 0;
-	while (cnt != xROCK_SQUARE_NUM) //Ö±µ½Óöµ½ÊÇ¿ÕĞĞµÄÎªÖ¹  
+	while (cnt != xROCK_SQUARE_NUM) //ç›´åˆ°é‡åˆ°æ˜¯ç©ºè¡Œçš„ä¸ºæ­¢  
 	{
 		cnt = 0;
 		for (int i = 1; i <= xROCK_SQUARE_NUM; i++)
 		{
 			game_board[rowIdx][i] = game_board[rowIdx - 1][i];
 
-			//²Á³ıÉÏÃæµÄÒ»ĞĞ  
+			//æ“¦é™¤ä¸Šé¢çš„ä¸€è¡Œ  
 			setcolor(BLACK);
 			rectangle(WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*i - ROCK_SQUARE_WIDTH ,
 				WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*(rowIdx - 1) - ROCK_SQUARE_WIDTH ,
 				WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*i,
 				WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*(rowIdx - 1));
 
-			//ÏÔÊ¾ÏÂÃæµÄÒ»ĞĞ  
+			//æ˜¾ç¤ºä¸‹é¢çš„ä¸€è¡Œ  
 			if (game_board[rowIdx][i] == 1)
 			{
 				setcolor(WHITE);
@@ -202,13 +203,13 @@ void DelCurLine(int rowIdx)
 			}
 
 			if (game_board[rowIdx][i] == 0)
-				cnt++;            //Í³¼ÆÒ»ĞĞÊÇ²»ÊÇ ¶¼ÊÇ¿Õ¸ñ  
+				cnt++;            //ç»Ÿè®¡ä¸€è¡Œæ˜¯ä¸æ˜¯ éƒ½æ˜¯ç©ºæ ¼  
 		}//for  
 		rowIdx--;
 	}
 }
 
-//ÊÇ·ñ¿ÉÒÔÒÆ¶¯·½¿é
+//æ˜¯å¦å¯ä»¥ç§»åŠ¨æ–¹å—
 bool MoveAble(int rockIndex, RockLocation_t* currentLocatePtr, int f_direction)
 {
 	int mask;
@@ -221,35 +222,35 @@ bool MoveAble(int rockIndex, RockLocation_t* currentLocatePtr, int f_direction)
 	mask = (unsigned short)1 << 15;
 	for (int i = 1; i <= 16; i++)
 	{
-		//ÓëÑÚÂëÏàÓëÎª1µÄ ¼´Îª·½¿éÉÏµÄµã  
+		//ä¸æ©ç ç›¸ä¸ä¸º1çš„ å³ä¸ºæ–¹å—ä¸Šçš„ç‚¹  
 		if ((RockArray[rockIndex].rockShapeBits & mask) != 0)
 		{
-			//ÅĞ¶ÏÄÜ·ñÒÆ¶¯(¼´É¨Ãè¼´½«ÒÆ¶¯µÄÎ»ÖÃ ÊÇ·ñÓëÉèÖÃµÄÎ§Ç½ÓĞÖØµş)  
-			//ÈôÊÇÏòÉÏ(¼´·­¹ö±äĞÎ)  
+			//åˆ¤æ–­èƒ½å¦ç§»åŠ¨(å³æ‰«æå³å°†ç§»åŠ¨çš„ä½ç½® æ˜¯å¦ä¸è®¾ç½®çš„å›´å¢™æœ‰é‡å )  
+			//è‹¥æ˜¯å‘ä¸Š(å³ç¿»æ»šå˜å½¢)  
 			if (f_direction == DIRECT_UP)
 			{
-				//ÒòÎª´ËÇé¿öÏÂ´«ÈëµÄÊÇÏÂÒ»¸ö·½¿éµÄĞÎ×´£¬¹ÊÎÒÃÇÖ±½ÓÅĞ¶Ï´Ë·½¿éµÄÎ»ÖÃÊÇ·ñÒÑ¾­±»Õ¼ 
-				//ÅĞ¶ÏÏÂÒ»¸ö·½¿é
+				//å› ä¸ºæ­¤æƒ…å†µä¸‹ä¼ å…¥çš„æ˜¯ä¸‹ä¸€ä¸ªæ–¹å—çš„å½¢çŠ¶ï¼Œæ•…æˆ‘ä»¬ç›´æ¥åˆ¤æ–­æ­¤æ–¹å—çš„ä½ç½®æ˜¯å¦å·²ç»è¢«å  
+				//åˆ¤æ–­ä¸‹ä¸€ä¸ªæ–¹å—
 				if (game_board[(rockY - WALL_SQUARE_WIDTH) / ROCK_SQUARE_WIDTH + 1]
 					[(rockX - WALL_SQUARE_WIDTH) / ROCK_SQUARE_WIDTH + 1] == 1)
 					return false;
 			}
-			//Èç¹ûÊÇÏòÏÂ·½ÏòÒÆ¶¯  
+			//å¦‚æœæ˜¯å‘ä¸‹æ–¹å‘ç§»åŠ¨  
 			else if (f_direction == DIRECT_DOWN)
 			{
 				if (game_board[(rockY - WALL_SQUARE_WIDTH) / ROCK_SQUARE_WIDTH + 2]
 					[(rockX - WALL_SQUARE_WIDTH) / ROCK_SQUARE_WIDTH + 1] == 1)
 					return false;
 			}
-			else //Èç¹ûÊÇ×óÓÒ·½ÏòÒÆ¶¯  
-			{   //f_directionµÄDIRECT_LEFTÎª-1£¬DIRECT_RIGHTÎª1£¬¹ÊÖ±½Ó¼Óf_direction¼´¿ÉÅĞ¶Ï¡£  
+			else //å¦‚æœæ˜¯å·¦å³æ–¹å‘ç§»åŠ¨  
+			{   //f_directionçš„DIRECT_LEFTä¸º-1ï¼ŒDIRECT_RIGHTä¸º1ï¼Œæ•…ç›´æ¥åŠ f_directionå³å¯åˆ¤æ–­ã€‚  
 				if (game_board[(rockY - WALL_SQUARE_WIDTH) / ROCK_SQUARE_WIDTH + 1]
 					[(rockX - WALL_SQUARE_WIDTH) / ROCK_SQUARE_WIDTH + 1 + f_direction] == 1)
 					return false;
 			}
 		}
 
-		//Ã¿4´Î »»ĞĞ ×ªµ½ÏÂÒ»ĞĞ¼ÌĞø  
+		//æ¯4æ¬¡ æ¢è¡Œ è½¬åˆ°ä¸‹ä¸€è¡Œç»§ç»­  
 		i % 4 == 0 ? (rockY += ROCK_SQUARE_WIDTH, rockX = currentLocatePtr->left)
 			: rockX += ROCK_SQUARE_WIDTH;
 
@@ -259,7 +260,7 @@ bool MoveAble(int rockIndex, RockLocation_t* currentLocatePtr, int f_direction)
 	return true;
 
 }
-//¸øÓÎÏ·game_boardÉèÖÃ±ê¼Ç±íÊ¾ÒÑ¾­Õ¼ÁË
+//ç»™æ¸¸æˆgame_boardè®¾ç½®æ ‡è®°è¡¨ç¤ºå·²ç»å äº†
 void SetGameBoardFlag(int rockIdx, RockLocation_t* curRockLocation)
 {
 	int mask;
@@ -272,24 +273,24 @@ void SetGameBoardFlag(int rockIdx, RockLocation_t* curRockLocation)
 	mask = (unsigned int)1 << 15;
 	for (int i = 1; i <= 16; i++)
 	{
-		//ÓëÑÚÂëÏàÓëÎª1µÄ ¼´Îª·½¿éÉÏµÄµã  
+		//ä¸æ©ç ç›¸ä¸ä¸º1çš„ å³ä¸ºæ–¹å—ä¸Šçš„ç‚¹  
 		if ((RockArray[rockIdx].rockShapeBits & mask) != 0)
 		{
 			game_board[(rockY - WALL_SQUARE_WIDTH) / ROCK_SQUARE_WIDTH + 1]
 				[(rockX - WALL_SQUARE_WIDTH) / ROCK_SQUARE_WIDTH + 1] = 1;
 		}
 
-		//Ã¿4´Î »»ĞĞ ×ªµ½ÏÂÒ»ĞĞ¼ÌĞø»­  
+		//æ¯4æ¬¡ æ¢è¡Œ è½¬åˆ°ä¸‹ä¸€è¡Œç»§ç»­ç”»  
 		i % 4 == 0 ? (rockY += ROCK_SQUARE_WIDTH, rockX = curRockLocation->left)
 			: rockX += ROCK_SQUARE_WIDTH;
 
 		mask >>= 1;
 	}
 }
-//ÅĞ¶ÏÓÎÏ·ÊÇ·ñ½áÊø
+//åˆ¤æ–­æ¸¸æˆæ˜¯å¦ç»“æŸ
 bool IsGameOver()
 {
-	bool topLineHaveRock = false;//¶¥ĞĞÊÇ·ñÓĞ·½¿é
+	bool topLineHaveRock = false;//é¡¶è¡Œæ˜¯å¦æœ‰æ–¹å—
 	bool bottomLineHaveRock = false;
 
 	for (int i = 1; i < xROCK_SQUARE_NUM; ++i)
