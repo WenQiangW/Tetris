@@ -10,6 +10,7 @@ void DelCurLine(int rowIdx);
 bool IsGameOver();
 
 
+
 void PlayGame()
 {
 	char userHit = 0;//用户敲击键盘
