@@ -262,7 +262,6 @@ bool MoveAble(int rockIndex, RockLocation_t* currentLocatePtr, int f_direction)
 	}
 
 	return true;
-
 }
 
 //给游戏game_board设置标记表示已经占了
