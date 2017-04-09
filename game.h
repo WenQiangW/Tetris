@@ -168,6 +168,7 @@ void UpdateSocres(int scores)
 	_stprintf(s, _T("%d"), scores);
 	outtextxy(GAME_WALL_WIDTH + 90, 200, s);
 }
+
 //消除当前行
 void DelCurLine(int rowIdx)
 {
