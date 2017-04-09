@@ -27,6 +27,7 @@ void PlayGame()
 	DisplayRock(curRockIndex, &initRockLocation, 1);
 	DisplayRock(nextRockIndex, &preRockLocation, 1);
 	bool moveAbled = false;
+	
 	while (true)
 	{
 		//判断当前方块是否落地(判断能否再下移)：如果落地,判断是否满行,再判断是否结束游戏， 改变game_board ,画出下次初始化的方块，以及生成新的预览方块
