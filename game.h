@@ -179,6 +179,7 @@ void DelCurLine(int rowIdx)
 		rectangle(WALL_SQUARE_WIDTH + (i - 1)*ROCK_SQUARE_WIDTH, (rowIdx - 1)*ROCK_SQUARE_WIDTH + WALL_SQUARE_WIDTH,
 				  WALL_SQUARE_WIDTH + i*ROCK_SQUARE_WIDTH, rowIdx*ROCK_SQUARE_WIDTH + WALL_SQUARE_WIDTH);
 	}
+	
 	//把上面的向下移
 	int cnt = 0;
 	while (cnt != xROCK_SQUARE_NUM) //直到遇到是空行的为止  
