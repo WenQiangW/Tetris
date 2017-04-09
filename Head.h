@@ -75,5 +75,4 @@ void InitGame();
 void PlayGame();
 bool IsGameOver();
 
-
 #endif
