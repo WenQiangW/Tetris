@@ -290,6 +290,7 @@ void SetGameBoardFlag(int rockIdx, RockLocation_t* curRockLocation)
 		mask >>= 1;
 	}
 }
+
 //判断游戏是否结束
 bool IsGameOver()
 {
