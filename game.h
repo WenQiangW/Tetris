@@ -160,6 +160,7 @@ void FullLine()
 		idx--;
 	}
 }
+
 void UpdateSocres(int scores)
 {
 	setcolor(RED);
