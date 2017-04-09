@@ -79,7 +79,6 @@ void PlayGame()
 }
 
 
-
 void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocation)
 {
 	switch (userHit)
