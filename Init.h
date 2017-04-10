@@ -83,6 +83,7 @@ void ReadRcok()
 	}
 	fclose(fp);
 }
+
 //将从文件中读取的字符串(长度默认为16)转换成 unsigned short
 void ShapeStrToBit(unsigned char *rockShapeStr, unsigned short& rockShapeBit)
 {
