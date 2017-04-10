@@ -64,7 +64,7 @@ void ReadRcok()
 					rocknext = rockShapeStart ;
 				}
 			}
-			//可能没有填满
+			//可能没有填满,
 			if (ShapeStrIdx < 16)
 			{
 				break;
