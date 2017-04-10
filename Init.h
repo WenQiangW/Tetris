@@ -2,49 +2,50 @@
 
 static void ShapeStrToBit(unsigned char *rockShapeStr, unsigned short& rockShapeBit);
 static void ReadRcok();
+
 void InitGame()
 {
-	//°ÑÈ«¾ÖÓÎÏ·ÓÎÏ·°æ³õÊ¼»¯£¬±ß½ç³õÊ¼»¯Îª1
+	//æŠŠå…¨å±€æ¸¸æˆæ¸¸æˆç‰ˆåˆå§‹åŒ–ï¼Œè¾¹ç•Œåˆå§‹åŒ–ä¸º1
 	for (int i = 0; i < xROCK_SQUARE_NUM + 2; i++)
 	{
-		game_board[0][i] = 1;  //ÉÏ±ß½ç
-		game_board[yROCK_SQUARE_NUM + 1][i] = 1; //ÏÂ±ß½ç
+		game_board[0][i] = 1;  //ä¸Šè¾¹ç•Œ
+		game_board[yROCK_SQUARE_NUM + 1][i] = 1; //ä¸‹è¾¹ç•Œ
 	}
 	for (int i = 0; i < yROCK_SQUARE_NUM + 2; i++)
 	{
-		game_board[i][0] = 1 ; //×ó±ß½ç
-		game_board[i][xROCK_SQUARE_NUM + 1] = 1; //ÓÒ±ß½ç
+		game_board[i][0] = 1 ; //å·¦è¾¹ç•Œ
+		game_board[i][xROCK_SQUARE_NUM + 1] = 1; //å³è¾¹ç•Œ
 	}
-	//¶ÁÈ¡¶íÂŞË¹·½¿é 
+	//è¯»å–ä¿„ç½—æ–¯æ–¹å— 
 	ReadRcok();
 
 }
 
-//´ÓÎÄ¼şÖĞ¶ÁÈ¡·½¿éµÄĞÎ×´´æ´¢µ½rockArrayÖĞ
+//ä»æ–‡ä»¶ä¸­è¯»å–æ–¹å—çš„å½¢çŠ¶å­˜å‚¨åˆ°rockArrayä¸­
 void ReadRcok()
 {
 	FILE* fp = fopen("RockShape.ini","r");
 	if (NULL == fp)
 	{
-		printf("´ò¿ªÎÄ¼şÊ§°Ü\n");
+		printf("æ‰“å¼€æ–‡ä»¶å¤±è´¥\n");
 		return;
 	}
-	unsigned char readBuf[1024]; //fp¶ÁÈ¡µ½×Ö·û´®readbufÖĞ
-	unsigned short rockShapeBit = 0;//´æ·Å·½¿éĞÎ×´£¬Õ¼16±ÈÌØÎ»
-	unsigned char rockShapeStr[16];//´æ·Å·½¿é×Ö·û´®
+	unsigned char readBuf[1024]; //fpè¯»å–åˆ°å­—ç¬¦ä¸²readbufä¸­
+	unsigned short rockShapeBit = 0;//å­˜æ”¾æ–¹å—å½¢çŠ¶ï¼Œå 16æ¯”ç‰¹ä½
+	unsigned char rockShapeStr[16];//å­˜æ”¾æ–¹å—å­—ç¬¦ä¸²
 	int ShapeStrIdx = 0;
-	int rockNum = 0;//Í³¼Æ·½¿éµÄ¸öÊıÒÔ¼°´æ·Å·½¿éÊı×éRockArrayµÄÏÂ±ê
-	int rocknext = 0;//·½¿éÊı×éÖĞÏÂÒ»¸öĞÎ×´
-	int rockShapeStart = 0;//Í¬Ò»ÀàĞÍµÄĞÎ×´
+	int rockNum = 0;//ç»Ÿè®¡æ–¹å—çš„ä¸ªæ•°ä»¥åŠå­˜æ”¾æ–¹å—æ•°ç»„RockArrayçš„ä¸‹æ ‡
+	int rocknext = 0;//æ–¹å—æ•°ç»„ä¸­ä¸‹ä¸€ä¸ªå½¢çŠ¶
+	int rockShapeStart = 0;//åŒä¸€ç±»å‹çš„å½¢çŠ¶
 	while (true)
 	{
 		size_t readSize = fread(readBuf, 1, 1024, fp);
 		if (readSize == 0)
 			break;
-		//´¦Àíreadbuf
+		//å¤„ç†readbuf
 		for (size_t idx = 0; idx < readSize; ++idx)
 		{
-			//½«×Ö·û´æ·Åµ½rockShapeStrÖĞ
+			//å°†å­—ç¬¦å­˜æ”¾åˆ°rockShapeSträ¸­
 			while (ShapeStrIdx < 16 && idx < readSize)
 			{
 				if (readBuf[idx] == '@' || readBuf[idx] == '#')
@@ -52,8 +53,8 @@ void ReadRcok()
 					rockShapeStr[ShapeStrIdx] = (unsigned char)readBuf[idx];
 					++ShapeStrIdx;
 				}
-				++idx; //¿ÉÄÜidx == readSizeÁË 
-				if (readBuf[idx] == '*')//ĞŞ¸ÄÉÏÒ»´Î·½¿éµÄnextÖµ
+				++idx; //å¯èƒ½idx == readSizeäº† 
+				if (readBuf[idx] == '*')//ä¿®æ”¹ä¸Šä¸€æ¬¡æ–¹å—çš„nextå€¼
 				{
 					idx += 5;
 					RockArray[--rockNum].nextRockIndex = rockShapeStart;
@@ -62,15 +63,15 @@ void ReadRcok()
 					rocknext = rockShapeStart ;
 				}
 			}
-			//¿ÉÄÜÃ»ÓĞÌîÂú
+			//å¯èƒ½æ²¡æœ‰å¡«æ»¡
 			if (ShapeStrIdx < 16)
 			{
 				break;
 			}
-			else //ÌîÂúshapestr
+			else //å¡«æ»¡shapestr
 			{
-				ShapeStrIdx = 0;//ÖÃ0
-				//½«rockShapeStr ×ªÎªrockShapeBit
+				ShapeStrIdx = 0;//ç½®0
+				//å°†rockShapeStr è½¬ä¸ºrockShapeBit
 				ShapeStrToBit(rockShapeStr, rockShapeBit);
 				rocknext++;
 				RockArray[rockNum].rockShapeBits = rockShapeBit;
@@ -81,7 +82,7 @@ void ReadRcok()
 	}
 	fclose(fp);
 }
-//½«´ÓÎÄ¼şÖĞ¶ÁÈ¡µÄ×Ö·û´®(³¤¶ÈÄ¬ÈÏÎª16)×ª»»³É unsigned short
+//å°†ä»æ–‡ä»¶ä¸­è¯»å–çš„å­—ç¬¦ä¸²(é•¿åº¦é»˜è®¤ä¸º16)è½¬æ¢æˆ unsigned short
 void ShapeStrToBit(unsigned char *rockShapeStr, unsigned short& rockShapeBit)
 {
 	rockShapeBit = 0;
@@ -91,6 +92,6 @@ void ShapeStrToBit(unsigned char *rockShapeStr, unsigned short& rockShapeBit)
 		{
 			rockShapeBit |= (1 << (16 - idx - 1));
 		}
-		// #Îª0 ²»ĞèÒª´¦Àí
+		// #ä¸º0 ä¸éœ€è¦å¤„ç†
 	}
 }
