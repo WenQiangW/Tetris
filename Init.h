@@ -97,3 +97,5 @@ void ShapeStrToBit(unsigned char *rockShapeStr, unsigned short& rockShapeBit)
 		// #为0 不需要处理
 	}
 }
+
+
