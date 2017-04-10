@@ -54,7 +54,7 @@ void ReadRcok()
 					rockShapeStr[ShapeStrIdx] = (unsigned char)readBuf[idx];
 					++ShapeStrIdx;
 				}
-				++idx; //可能idx == readSize了 ,这里不可能
+				++idx; //可能idx == readSize了 ,这里不可能等于的，
 				if (readBuf[idx] == '*')//修改上一次方块的next值
 				{
 					idx += 5;
