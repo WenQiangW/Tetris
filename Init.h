@@ -37,6 +37,7 @@ void ReadRcok()
 	int rockNum = 0;//统计方块的个数以及存放方块数组RockArray的下标
 	int rocknext = 0;//方块数组中下一个形状
 	int rockShapeStart = 0;//同一类型的形状
+	
 	while (true)
 	{
 		size_t readSize = fread(readBuf, 1, 1024, fp);
