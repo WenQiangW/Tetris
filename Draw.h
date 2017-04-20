@@ -2,7 +2,6 @@
 
 
 
-
 //画出游戏界面
 void DrawGameWindow()
 {
