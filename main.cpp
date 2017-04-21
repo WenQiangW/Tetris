@@ -3,14 +3,15 @@
 #include"Init.h"
 #include"game.h"
 
+
 int main()
 {
 	initgraph(WINDOW_WIDTH,WINDOW_HIGH);
 
 	DrawGameWindow();
-	//Ê¹ÓÃ API º¯ÊıĞŞ¸Ä´°¿ÚÃû³Æ  
+	//ä½¿ç”¨ API å‡½æ•°ä¿®æ”¹çª—å£åç§°  
 	HWND hWnd = GetHWnd();
-	SetWindowText(hWnd, _T("¶íÂŞË¹·½¿é"));
+	SetWindowText(hWnd, _T("ä¿„ç½—æ–¯æ–¹å—"));
 	InitGame();
 	PlayGame();
 	getchar();
