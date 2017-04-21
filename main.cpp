@@ -4,6 +4,7 @@
 #include"game.h"
 
 
+
 int main()
 {
 	initgraph(WINDOW_WIDTH,WINDOW_HIGH);
