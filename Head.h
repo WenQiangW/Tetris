@@ -2,6 +2,7 @@
 #define _HEAD_H_
 
 
+
 #include<graphics.h>
 #include<stdio.h>
 #include<conio.h>
