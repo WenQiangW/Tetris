@@ -7,6 +7,7 @@ static void ReadRcok();
 
 
 
+
 void InitGame()
 {
 	//把全局游戏游戏版初始化，边界初始化为1
