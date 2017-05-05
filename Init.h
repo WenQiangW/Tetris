@@ -1,5 +1,5 @@
 #include"Head.h"
-aa
+a
 static void ShapeStrToBit(unsigned char *rockShapeStr, unsigned short& rockShapeBit);
 static void ReadRcok();
 
