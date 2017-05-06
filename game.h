@@ -2,7 +2,6 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 
 
-
 bool MoveAble(int rockIndex, RockLocation_t* currentLocatePtr, int f_direction);
 void SetGameBoardFlag(int rockIdx, RockLocation_t* curRockLocation);
 void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocation);
