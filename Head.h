@@ -9,7 +9,6 @@
 #include<string.h>
 #define _CRT_SECURE_NO_WARNINGS 1
 
-
 //界面的相关的参数
 #define WALL_SQUARE_WIDTH 10 //围墙方块的宽度
 #define xWALL_SQUARE_NUM 30 //x轴方向的方块的数目
@@ -74,5 +73,6 @@ void InitGame();
 //game.h
 void PlayGame();
 bool IsGameOver();
+
 
 #endif
