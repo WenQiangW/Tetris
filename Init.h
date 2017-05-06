@@ -1,10 +1,7 @@
 #include"Head.h"
 
-
-
 static void ShapeStrToBit(unsigned char *rockShapeStr, unsigned short& rockShapeBit);
 static void ReadRcok();
-
 
 void InitGame()
 {
@@ -40,7 +37,6 @@ void ReadRcok()
 	int rockNum = 0;//统计方块的个数以及存放方块数组RockArray的下标
 	int rocknext = 0;//方块数组中下一个形状
 	int rockShapeStart = 0;//同一类型的形状
-	
 	while (true)
 	{
 		size_t readSize = fread(readBuf, 1, 1024, fp);
@@ -57,7 +53,7 @@ void ReadRcok()
 					rockShapeStr[ShapeStrIdx] = (unsigned char)readBuf[idx];
 					++ShapeStrIdx;
 				}
-				++idx; //可能idx == readSize了 ,这里不可能等于的，配置文件小于1024
+				++idx; //可能idx == readSize了 
 				if (readBuf[idx] == '*')//修改上一次方块的next值
 				{
 					idx += 5;
@@ -67,7 +63,7 @@ void ReadRcok()
 					rocknext = rockShapeStart ;
 				}
 			}
-			//可能没有填满,
+			//可能没有填满
 			if (ShapeStrIdx < 16)
 			{
 				break;
@@ -86,7 +82,6 @@ void ReadRcok()
 	}
 	fclose(fp);
 }
-
 //将从文件中读取的字符串(长度默认为16)转换成 unsigned short
 void ShapeStrToBit(unsigned char *rockShapeStr, unsigned short& rockShapeBit)
 {
@@ -100,5 +95,3 @@ void ShapeStrToBit(unsigned char *rockShapeStr, unsigned short& rockShapeBit)
 		// #为0 不需要处理
 	}
 }
-
-
