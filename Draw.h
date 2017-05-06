@@ -1,10 +1,11 @@
 #include"Head.h"
 
+
 //画出游戏界面
 void DrawGameWindow()
 {
 	//先画出围墙
-	setcolor(RED); 
+	setcolor(BLUE);
 	setlinestyle(PS_SOLID,NULL,0);
 	setfillcolor(BLUE);
 	//画出上下围墙
@@ -49,16 +50,19 @@ void DrawGameWindow()
 //在游戏区显示编号为rockIdx的方块
 void DisplayRock(int rockIdx,  RockLocation_t*  LocatePtr, bool displayed)
 {
-	int color;//方块的颜色
+	int color;//方块的填充颜色
+	int lineColor = WHITE;//线的颜色
 	int boardFalg = 0;
 	int xRock = 0;
 	int yRock = 0;
 	unsigned short rockCode = RockArray[rockIdx].rockShapeBits;
 	//如果displayed为true的话，将方块块颜色设置为white，game_board对应的位置设置为1；
 	//如果displayed为false的话，将方块块颜色设置为black，game_board对应的位置设置为0；
-	displayed ? (color = WHITE, boardFalg = 1) : (color = BLACK, boardFalg = 0);
+	displayed ? (color = RED, boardFalg = 1) : (color = BLACK,lineColor = BLACK, boardFalg = 0);
 	
-	setcolor(color);
+	setcolor(lineColor);
+	setfillcolor(color);
+	
 	setlinestyle(PS_SOLID);//设置为实线，
 	xRock = LocatePtr->left;
 	yRock = LocatePtr->top;
@@ -70,9 +74,8 @@ void DisplayRock(int rockIdx,  RockLocation_t*  LocatePtr, bool displayed)
 		
 		mask = 1 << (16 - i);
 		if ((rockCode & mask) != 0) //如果不为0的话，就画出小方块
-		{
-			//实线的像素为2
-			rectangle(xRock , yRock, xRock + ROCK_SQUARE_WIDTH, yRock + ROCK_SQUARE_WIDTH);
+		{		
+			fillrectangle(xRock , yRock, xRock + ROCK_SQUARE_WIDTH, yRock + ROCK_SQUARE_WIDTH);
 		}
 		if (i % 4 == 0) //换行
 		{
@@ -85,6 +88,4 @@ void DisplayRock(int rockIdx,  RockLocation_t*  LocatePtr, bool displayed)
 		}
 	}
 }
-
-
 
