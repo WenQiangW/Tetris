@@ -1,7 +1,6 @@
 #include"Head.h"
 #define _CRT_SECURE_NO_WARNINGS 1
 
-
 bool MoveAble(int rockIndex, RockLocation_t* currentLocatePtr, int f_direction);
 void SetGameBoardFlag(int rockIdx, RockLocation_t* curRockLocation);
 void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocation);
@@ -9,7 +8,6 @@ void FullLine();
 void UpdateSocres(int scores);
 void DelCurLine(int rowIdx);
 bool IsGameOver();
-
 
 
 void PlayGame()
@@ -29,7 +27,6 @@ void PlayGame()
 	DisplayRock(curRockIndex, &initRockLocation, 1);
 	DisplayRock(nextRockIndex, &preRockLocation, 1);
 	bool moveAbled = false;
-	
 	while (true)
 	{
 		//判断当前方块是否落地(判断能否再下移)：如果落地,判断是否满行,再判断是否结束游戏， 改变game_board ,画出下次初始化的方块，以及生成新的预览方块
@@ -74,12 +71,13 @@ void PlayGame()
 		//AutomaticDownMove(curRockIndex, &curRockLocation);
 		//画出新方块
 		DisplayRock(curRockIndex, &curRockLocation, 1);
-		FlushBatchDraw();
+		FlushBatchDraw();//刷新界面，防止出现闪屏
 		Sleep(20);
 	}
 }
 
 
+//响应键盘命令时间
 void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocation)
 {
 	switch (userHit)
@@ -100,7 +98,7 @@ void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocati
 			curRockLocation->top += 2 * (ROCK_SQUARE_WIDTH);
 			if (!MoveAble(*RockIndex, curRockLocation, DIRECT_DOWN))
 			{
-				curRockLocation->top += ROCK_SQUARE_WIDTH;
+				curRockLocation->top -= ROCK_SQUARE_WIDTH;
 			}
 		}
 		break;
@@ -137,9 +135,9 @@ void UserHitKeyBoard(char userHit, int* RockIndex, RockLocation_t* curRockLocati
 void FullLine()
 {
 	bool linefull = true;
-	int idx = yROCK_SQUARE_NUM;//从最后一行往上查找
+	int idx = yROCK_SQUARE_NUM;//从最后一行往上查找 22
 	int count = 0;
-	while (count != xROCK_SQUARE_NUM ) //遇到空行
+	while (count != xROCK_SQUARE_NUM ) //遇到空行 14
 	{
 		linefull = true;
 		count = 0;
@@ -160,8 +158,8 @@ void FullLine()
 		}
 		idx--;
 	}
-}
 
+}
 void UpdateSocres(int scores)
 {
 	setcolor(RED);
@@ -169,18 +167,17 @@ void UpdateSocres(int scores)
 	_stprintf(s, _T("%d"), scores);
 	outtextxy(GAME_WALL_WIDTH + 90, 200, s);
 }
-
 //消除当前行
 void DelCurLine(int rowIdx)
 {
 	//擦除当前行
 	setcolor(BLACK);
+	setfillcolor(BLACK);
 	for (int i = 1; i < xROCK_SQUARE_NUM; ++i)
 	{
-		rectangle(WALL_SQUARE_WIDTH + (i - 1)*ROCK_SQUARE_WIDTH, (rowIdx - 1)*ROCK_SQUARE_WIDTH + WALL_SQUARE_WIDTH,
+		fillrectangle(WALL_SQUARE_WIDTH + (i - 1)*ROCK_SQUARE_WIDTH, (rowIdx - 1)*ROCK_SQUARE_WIDTH + WALL_SQUARE_WIDTH,
 				  WALL_SQUARE_WIDTH + i*ROCK_SQUARE_WIDTH, rowIdx*ROCK_SQUARE_WIDTH + WALL_SQUARE_WIDTH);
 	}
-	
 	//把上面的向下移
 	int cnt = 0;
 	while (cnt != xROCK_SQUARE_NUM) //直到遇到是空行的为止  
@@ -192,7 +189,8 @@ void DelCurLine(int rowIdx)
 
 			//擦除上面的一行  
 			setcolor(BLACK);
-			rectangle(WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*i - ROCK_SQUARE_WIDTH ,
+			setfillcolor(BLACK);
+			fillrectangle(WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*i - ROCK_SQUARE_WIDTH ,
 				WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*(rowIdx - 1) - ROCK_SQUARE_WIDTH ,
 				WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*i,
 				WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*(rowIdx - 1));
@@ -201,7 +199,8 @@ void DelCurLine(int rowIdx)
 			if (game_board[rowIdx][i] == 1)
 			{
 				setcolor(WHITE);
-				rectangle(WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*i - ROCK_SQUARE_WIDTH ,
+				setfillcolor(RED);
+				fillrectangle(WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*i - ROCK_SQUARE_WIDTH ,
 					WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*rowIdx - ROCK_SQUARE_WIDTH ,
 					WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*i,
 					WALL_SQUARE_WIDTH + ROCK_SQUARE_WIDTH*rowIdx);
@@ -263,8 +262,8 @@ bool MoveAble(int rockIndex, RockLocation_t* currentLocatePtr, int f_direction)
 	}
 
 	return true;
-}
 
+}
 //给游戏game_board设置标记表示已经占了
 void SetGameBoardFlag(int rockIdx, RockLocation_t* curRockLocation)
 {
@@ -292,7 +291,6 @@ void SetGameBoardFlag(int rockIdx, RockLocation_t* curRockLocation)
 		mask >>= 1;
 	}
 }
-
 //判断游戏是否结束
 bool IsGameOver()
 {
