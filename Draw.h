@@ -1,6 +1,6 @@
 #include"Head.h"
 
-12341231
+123412312
 //画出游戏界面
 void DrawGameWindow()
 {
