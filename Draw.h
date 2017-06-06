@@ -1,6 +1,6 @@
 #include"Head.h"
 
-p
+pa
 
 //画出游戏界面
 void DrawGameWindow()
